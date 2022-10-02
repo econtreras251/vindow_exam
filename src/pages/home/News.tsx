@@ -6,7 +6,7 @@ function NewsPage(props: { news: News[] }) {
 
     const renderNews = useCallback(() => {
         return props.news.map(n => (<div key={n.url} className="col mb-4">
-            <Card imgUrl={n.image} />
+            <Card title={n.title} description={n.description} imgUrl={n.image} />
         </div>));
     }, [props.news])
 
