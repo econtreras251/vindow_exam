@@ -3,7 +3,7 @@ import React from 'react';
 function Card(props: { imgUrl: string, title: string, description: string }) {
   return (
     <div className="card border border-dark p-2">
-        <img src={props.imgUrl} className="card-img-top rounded" alt="..." />
+        <img src={props.imgUrl} className="card-img-top rounded h-50" alt="..." />
         <div className="card-body text-dark">
             <h4 className="card-title font-weight-bold">{props.title}</h4>
             <p className="card-text">{props.description}</p>
