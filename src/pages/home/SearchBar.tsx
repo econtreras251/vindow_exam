@@ -8,7 +8,7 @@ function SearchBar() {
                     <input placeholder="Enter to search news" type="text" className="form-control" aria-describedby="search news" required />
                 </div>
 
-                <button className="btn btn-primary" type="submit">Search</button>
+                <button className="btn btn-primary text-light" type="submit">Search</button>
             </div>
         </form>
     );

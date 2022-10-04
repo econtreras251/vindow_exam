@@ -11,7 +11,7 @@ function NewsPage(props: { news: News[] }) {
     }, [props.news])
 
     return (
-        <div className="row row-cols-1 row-cols-md-3">
+        <div className="row row-cols-1 row-md-3">
             {renderNews()}
         </div>
     );
