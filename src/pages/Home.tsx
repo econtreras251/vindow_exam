@@ -4,7 +4,7 @@ import { selectNews } from '../redux/selectors';
 import { useAppDispatch, useAppSelector } from '../redux/store';
 import NewsPage from './home/News';
 import Pagination from './home/Pagination';
-import SearchBar from './home/SearchBar';
+import SearchBar from '../components/SearchBar';
 
 function Home() {
     const dispatch = useAppDispatch();

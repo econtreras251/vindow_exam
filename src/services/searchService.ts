@@ -29,10 +29,10 @@ interface NewsSearchAPIResponse {
 }
 
 const fakeCall: () => Promise<NewsSearchAPIResponse> = async () => {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve, _) => {
         setTimeout(() => {
             resolve(data as NewsSearchAPIResponse)
-        }, 300);
+        }, 3000);
     })
 }
 
