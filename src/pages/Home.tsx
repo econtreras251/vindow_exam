@@ -11,12 +11,12 @@ function Home() {
     const news = useAppSelector(selectNews);
 
     useEffect(() => {
-        console.log("Insta")
         dispatch(searchAction(""));
     }, [dispatch]);
 
     return (
         <div className="container mt-3">
+            <h1 className="display-4 text-warning font-weight-bold">News Search</h1>
             <SearchBar />
             <NewsPage news={news} />
             <Pagination />

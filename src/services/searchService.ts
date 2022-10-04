@@ -23,14 +23,15 @@ interface UnformatNew {
     image: UnformatImage;
 }
 
-interface FakeResponse {
-    value: UnformatNew[]
+interface NewsSearchAPIResponse {
+    value: UnformatNew[];
+    totalCount: number;
 }
 
-const fakeCall: () => Promise<FakeResponse> = async () => {
+const fakeCall: () => Promise<NewsSearchAPIResponse> = async () => {
     return new Promise((resolve, reject) => {
         setTimeout(() => {
-            resolve(data as FakeResponse)
+            resolve(data as NewsSearchAPIResponse)
         }, 300);
     })
 }
@@ -41,24 +42,27 @@ const formatDescription = (desc: string) => {
     return desc.split(" ").slice(0, limitOfWords).join(" ").concat(ellipsis);
 }
 
-const formatNews = (response: FakeResponse): News[] => {
+const formatNews = (response: NewsSearchAPIResponse): { news: News[], count: number } => {
     const data = response.value;
 
-    return data.map(dat => ({
+    const news = data.map(dat => ({
         title: dat.title,
         description: formatDescription(dat.body),
         url: dat.url,
         image: dat.image.url
     }));
+    return { news, count: response.totalCount };
 }
 
-export const searchNews = async () => {
+
+export const searchNews: () => Promise<{ news: News[], count: number }> = async () => {
     try {
         // const response = await axiosClient.get('/search');
         const response = await fakeCall();
         return formatNews(response);
     } catch (error) {
         console.error(error);
+        throw new Error();
         // TODO: dispatch an action to show a formatted error with this information (not found/forbbiden/internal error)
     }
 }
