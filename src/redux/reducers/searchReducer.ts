@@ -1,6 +1,6 @@
 import { createReducer } from '@reduxjs/toolkit'
+import { News } from '../../models/News';
 import { searchAction } from '../actions';
-import { News } from '../../pages/home/news.interface';
 
 interface InitialState {
     news: News[],

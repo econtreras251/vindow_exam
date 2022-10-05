@@ -1,11 +1,15 @@
 import React, { useCallback } from 'react';
-import Card from '../../components/Card';
-import Loading from '../../components/Loading';
-import { selectLoading } from '../../redux/selectors';
-import { useAppSelector } from '../../redux/store';
-import { News } from './news.interface';
+import Card from './Card';
+import Loading from './Loading';
+import { selectLoading } from '../redux/selectors';
+import { useAppSelector } from '../redux/store';
+import { News } from '../models/News';
 
-function NewsPage(props: { news: News[] }) {
+interface NewsPageProps {
+    news: News[];
+}
+
+function NewsPage(props: NewsPageProps) {
     const loading = useAppSelector(selectLoading);
 
     const renderNews = useCallback(() => {

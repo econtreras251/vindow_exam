@@ -1,14 +1,29 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import './card.scss';
 import RightArrow from '../icons/RightArrow';
+import { useAppDispatch } from '../redux/store';
+import { toggleModalAction } from '../redux/actions';
 
-function Card(props: { imgUrl: string, title: string, description: string, url: string }) {
+interface CardProps {
+  imgUrl: string;
+  title: string;
+  description: string;
+  url: string
+}
+
+
+function Card(props: CardProps) {
+  const dispatch = useAppDispatch();
+
+  const openImage = useCallback(() => {
+    dispatch(toggleModalAction(props.imgUrl));
+  }, [dispatch]);
+
   return (
     <div className="card p-0 border-0">
       <div className="row no-gutters">
         <div className="col-md-4">
-          {/* TODO: set a fixed height */}
-          <img src={props.imgUrl} className="img-fluid custom-img rounded" alt="..." />
+          <img onClick={openImage} src={props.imgUrl} className="img-fluid custom-img rounded" alt={props.title} />
         </div>
         <div className="col-md-8">
 

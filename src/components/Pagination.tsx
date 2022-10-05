@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
-import { selectSearchCount, selectSearchPage, selectSearchLimit } from '../../redux/selectors';
-import { useAppSelector } from '../../redux/store';
+import { selectSearchCount, selectSearchPage, selectSearchLimit } from '../redux/selectors';
+import { useAppSelector } from '../redux/store';
 
 
 function Pagination() {

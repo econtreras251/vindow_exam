@@ -13,18 +13,16 @@ interface SearchFormValues {
     searchTerm: string;
 }
 
+const initialValues: SearchFormValues = { searchTerm: '' };
+
 function SearchBar() {
     const dispatch = useAppDispatch();
-    const loading = useAppSelector(selectLoading);
-    
-    // TODO: use the redux store to read this value;
-    const initialValues: SearchFormValues = { searchTerm: '' };
+    const loading = useAppSelector(selectLoading);    
 
     return (
         <Formik
             initialValues={initialValues}
             onSubmit={(values, actions) => {
-                console.log({ values, actions });
                 dispatch(searchAction(values.searchTerm));
                 actions.setSubmitting(false);
             }}

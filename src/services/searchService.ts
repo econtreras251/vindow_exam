@@ -1,4 +1,4 @@
-import { News } from '../pages/home/news.interface';
+import { News } from '../models/News';
 import axiosClient from './axiosClient';
 import data from './fakeData.json';
 
