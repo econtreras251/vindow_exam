@@ -49,6 +49,7 @@ const formatNews = (response: NewsSearchAPIResponse): { news: News[], count: num
         title: dat.title,
         description: formatDescription(dat.body),
         url: dat.url,
+        thumbnail: dat.image.thumbnail, 
         image: dat.image.url
     }));
     return { news, count: response.totalCount };

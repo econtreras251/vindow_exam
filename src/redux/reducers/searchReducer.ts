@@ -1,6 +1,6 @@
 import { createReducer } from '@reduxjs/toolkit'
 import { News } from '../../models/News';
-import { searchAction } from '../actions';
+import { changeQuery, searchAction } from '../actions';
 
 interface InitialState {
     news: News[],
@@ -8,6 +8,7 @@ interface InitialState {
     options: {
         limit: number;
         page: number;
+        searchTerm: string;
     },
     count: number;
     error?: string;
@@ -19,6 +20,7 @@ const initialState: InitialState = {
     options: {
         limit: +(process.env.REACT_APP_PAGE_SIZE || 10),
         page: 0,
+        searchTerm: "",
     },
     count: 0,
 };
@@ -44,7 +46,18 @@ export default createReducer(initialState, builder => {
             return {
                 ...state,
                 pending: false,
-                error: 'We are sorry but something went wrong fetching the files.'
+                error: 'We are sorry but something went wrong fetching the news.'
+            };
+        })
+        .addCase(changeQuery, (state, action) => {
+            const { page, searchTerm } = action.payload
+            return {
+                ...state,
+                options: {
+                    limit: state.options.limit,
+                    page,
+                    searchTerm,
+                }
             };
         });
 });

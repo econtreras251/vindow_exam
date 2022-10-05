@@ -12,7 +12,7 @@ function Home() {
     const news = useAppSelector(selectNews);
 
     useEffect(() => {
-        dispatch(searchAction(""));
+        dispatch(searchAction({ searchTerm: "soccer", page: 1 }));
     }, [dispatch]);
 
     return (

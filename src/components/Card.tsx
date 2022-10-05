@@ -5,10 +5,11 @@ import { useAppDispatch } from '../redux/store';
 import { toggleModalAction } from '../redux/actions';
 
 interface CardProps {
-  imgUrl: string;
+  image: string;
   title: string;
   description: string;
   url: string
+  thumbnail?: string;
 }
 
 
@@ -16,14 +17,14 @@ function Card(props: CardProps) {
   const dispatch = useAppDispatch();
 
   const openImage = useCallback(() => {
-    dispatch(toggleModalAction(props.imgUrl));
+    dispatch(toggleModalAction(props.image));
   }, [dispatch]);
 
   return (
     <div className="card p-0 border-0">
       <div className="row no-gutters">
         <div className="col-md-4">
-          <img onClick={openImage} src={props.imgUrl} className="img-fluid custom-img rounded" alt={props.title} />
+          <img onClick={openImage} src={props.thumbnail || props.image} className="img-fluid custom-img rounded" alt={props.title} />
         </div>
         <div className="col-md-8">
 

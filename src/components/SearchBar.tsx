@@ -17,13 +17,13 @@ const initialValues: SearchFormValues = { searchTerm: '' };
 
 function SearchBar() {
     const dispatch = useAppDispatch();
-    const loading = useAppSelector(selectLoading);    
+    const loading = useAppSelector(selectLoading);
 
     return (
         <Formik
             initialValues={initialValues}
             onSubmit={(values, actions) => {
-                dispatch(searchAction(values.searchTerm));
+                dispatch(searchAction({ searchTerm: values.searchTerm, page: 1 }));
                 actions.setSubmitting(false);
             }}
         >

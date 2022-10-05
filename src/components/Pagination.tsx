@@ -1,44 +1,48 @@
-import React, { useMemo } from 'react';
-import { selectSearchCount, selectSearchPage, selectSearchLimit } from '../redux/selectors';
-import { useAppSelector } from '../redux/store';
-
+import React, { useCallback, useMemo } from 'react';
+import { selectSearchCount, selectSearchLimit, selectSearchPage, selectSearchTerm } from '../redux/selectors';
+import ReactPaginate from 'react-paginate';
+import { useAppDispatch, useAppSelector } from '../redux/store';
+import useWindowSize from '../react-hooks/useWindowSize';
+import { searchAction } from '../redux/actions';
 
 function Pagination() {
+  const dispatch = useAppDispatch();
   const count = useAppSelector(selectSearchCount);
-  const page = useAppSelector(selectSearchPage);
-  const limit = useAppSelector(selectSearchLimit);
-  const numOfPages = useMemo(() => Math.round(count / limit), [count, limit]);
-  
-  const pages = useMemo(() => {
-    // TODO: calculate the numbers that need to show in order to match with the page.
-    if (numOfPages >= 6) {
-      return Array.from(Array(6).keys()).concat(numOfPages);
-    }
-    return Array.from(Array(numOfPages).keys())
-  }, [numOfPages]);
+  const currentPage = useAppSelector(selectSearchPage);
+  const searchTerm = useAppSelector(selectSearchTerm);
+  const itemsPerPage = useAppSelector(selectSearchLimit);
+  const numberOfPages = useMemo(() => Math.round(count / itemsPerPage), [count, itemsPerPage]);
 
-  const renderPagesLinks = useMemo(
-    () => pages.map((pagNum) => (<li className="page-item" key={pagNum}><a className="page-link" href="#">{pagNum + 1}</a></li>)),
-    [pages]
-  );
+  const [width] = useWindowSize();
+  const isMobile = useMemo(() => width <= 576, [width]);
+
+  const handlePageClick = useCallback((event: any) => {
+    const page = event.selected + 1;
+    dispatch(searchAction({ searchTerm, page }));
+  }, [searchTerm, dispatch]);
 
   return (
-    <nav aria-label="Page navigation">
-      <ul className="pagination justify-content-center">
-        <li className="page-item">
-          <a className="page-link" href="#" aria-label="Previous">
-            <span aria-hidden="true">&laquo;</span>
-          </a>
-        </li>
-
-        {renderPagesLinks}
-
-        <li className="page-item">
-          <a className="page-link" href="#" aria-label="Next">
-            <span aria-hidden="true">&raquo;</span>
-          </a>
-        </li>
-      </ul>
+    <nav aria-label="Page navigation example">
+      <ReactPaginate
+        className="pagination justify-content-center"
+        pageClassName="page-item"
+        pageLinkClassName="page-link"
+        activeClassName="active"
+        previousClassName="page-item"
+        previousLinkClassName="page-link"
+        nextClassName="page-item"
+        nextLinkClassName="page-link"
+        breakClassName="page-item"
+        breakLinkClassName="page-link"
+        breakLabel="..."
+        previousLabel="&laquo;"
+        nextLabel="&raquo;"
+        onPageChange={handlePageClick}
+        pageRangeDisplayed={2}
+        marginPagesDisplayed={isMobile ? 1 : 2}
+        pageCount={numberOfPages}
+        forcePage={currentPage - 1}
+      />
     </nav>
   );
 }
