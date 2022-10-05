@@ -17,7 +17,7 @@ function NewsPage(props: NewsPageProps) {
     const searchTerm = useAppSelector(selectSearchTerm);
     const errorMessage = useAppSelector(selectSearchError);
 
-    const blankPage = useMemo(() => errorMessage != "" || errorMessage != undefined ? <Error /> : <NoResults />, [errorMessage]);
+    const blankPage = useMemo(() => errorMessage != "" && errorMessage != undefined ? <Error /> : <NoResults />, [errorMessage]);
 
     const renderNews = useCallback(() => {
         return props.news.map(n => (<div key={n.url} className="col mb-4">
