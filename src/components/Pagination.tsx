@@ -16,7 +16,7 @@ function Pagination() {
   const [width] = useWindowSize();
   const isMobile = useMemo(() => width <= 576, [width]);
 
-  const handlePageClick = useCallback((event: any) => {
+  const handlePageClick = useCallback((event: { selected: number }) => {
     const page = event.selected + 1;
     dispatch(searchAction({ searchTerm, page }));
   }, [searchTerm, dispatch]);

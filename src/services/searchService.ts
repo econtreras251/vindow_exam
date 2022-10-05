@@ -1,69 +1,35 @@
+import { AxiosError, AxiosResponse } from 'axios';
 import { News } from '../models/News';
+import { NewsSearchAPIResponse } from '../models/SearchAPIResponse';
 import axiosClient from './axiosClient';
-import data from './fakeData.json';
+import { buildNews } from './helper';
 
-interface UnformatImage {
-    url: string;
-    thumbnail: string;
-    webpageUrl: string;
+const pageSize = +(process.env.REACT_APP_PAGE_SIZE || 10);
+
+interface NewsResponse {
+    news: News[];
+    count: number;
 }
 
-interface UnformatNew {
-    id: string;
-    title: string;
-    url: string;
-    description: string;
-    body: string;
-    snippet: string;
-    keywords: string;
-    language: string;
-    isSafe: boolean;
-    datePublished: string;
-    provider: Object;
-    image: UnformatImage;
+const formatNews = (response: AxiosResponse<NewsSearchAPIResponse>): NewsResponse => {
+    const data = response.data.value;
+    const news = buildNews(data)
+    return { news, count: response.data.totalCount };
 }
 
-interface NewsSearchAPIResponse {
-    value: UnformatNew[];
-    totalCount: number;
-}
-
-const fakeCall: () => Promise<NewsSearchAPIResponse> = async () => {
-    return new Promise((resolve, _) => {
-        setTimeout(() => {
-            resolve(data as NewsSearchAPIResponse)
-        }, 3000);
-    })
-}
-
-const formatDescription = (desc: string) => {
-    const limitOfWords = 20;
-    const ellipsis = "...";
-    return desc.split(" ").slice(0, limitOfWords).join(" ").concat(ellipsis);
-}
-
-const formatNews = (response: NewsSearchAPIResponse): { news: News[], count: number } => {
-    const data = response.value;
-
-    const news = data.map(dat => ({
-        title: dat.title,
-        description: formatDescription(dat.body),
-        url: dat.url,
-        thumbnail: dat.image.thumbnail, 
-        image: dat.image.url
-    }));
-    return { news, count: response.totalCount };
-}
-
-
-export const searchNews: () => Promise<{ news: News[], count: number }> = async () => {
+export async function searchNews(searchTerm: string, page: number): Promise<NewsResponse> {
     try {
-        // const response = await axiosClient.get('/search');
-        const response = await fakeCall();
+        const response = await axiosClient.get('/api/search/NewsSearchAPI', {
+            params: {
+                q: searchTerm,
+                pageSize: pageSize,
+                pageNumber: page,
+                withThumbnails: true
+            }
+        });
         return formatNews(response);
     } catch (error) {
         console.error(error);
-        throw new Error();
-        // TODO: dispatch an action to show a formatted error with this information (not found/forbbiden/internal error)
+        return { news: [], count: 0 };
     }
 }

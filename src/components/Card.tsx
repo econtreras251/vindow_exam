@@ -18,7 +18,7 @@ function Card(props: CardProps) {
 
   const openImage = useCallback(() => {
     dispatch(toggleModalAction(props.image));
-  }, [dispatch]);
+  }, [dispatch, props.image]);
 
   return (
     <div className="card p-0 border-0">
@@ -31,7 +31,7 @@ function Card(props: CardProps) {
           <div className="card-body text-dark h-100 justify-content-between d-flex flex-column">
             <h4 className="card-title font-weight-bold">{props.title}</h4>
             <p className="card-text">{props.description}</p>
-            <a href={props.url} target="_blank" className="text-decoration-none text-primary font-weight-bold" data-ol-has-click-handler="">
+            <a href={props.url} target="_blank" rel="noreferrer" className="text-decoration-none text-primary font-weight-bold" data-ol-has-click-handler="">
               Read More
               <RightArrow />
             </a>

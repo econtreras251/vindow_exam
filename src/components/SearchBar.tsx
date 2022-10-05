@@ -4,10 +4,10 @@ import {
     Form,
     Field,
 } from 'formik';
+import './searchBar.scss';
 import { useAppDispatch, useAppSelector } from '../redux/store';
 import { searchAction } from '../redux/actions';
 import { selectLoading } from '../redux/selectors';
-
 
 interface SearchFormValues {
     searchTerm: string;
@@ -28,7 +28,7 @@ function SearchBar() {
             }}
         >
             <Form className="form-row m-0 mb-3 justify-content-between">
-                <div className="col-md-11 p-0">
+                <div className="search-bar col-md-11 p-0">
                     <Field id="searchTerm" name="searchTerm" placeholder="Enter to search news" type="text" className="form-control" aria-describedby="search news" required />
                 </div>
 
