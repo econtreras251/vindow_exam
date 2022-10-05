@@ -1,4 +1,4 @@
-import { AxiosError, AxiosResponse } from 'axios';
+import { AxiosResponse } from 'axios';
 import { News } from '../models/News';
 import { NewsSearchAPIResponse } from '../models/SearchAPIResponse';
 import axiosClient from './axiosClient';

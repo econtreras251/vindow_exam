@@ -16,8 +16,10 @@ function Modal() {
     }, []);
 
     useEffectAfterMount(() => {
-        triggerButton();
-    }, [toggle]);
+        if (image) {
+            triggerButton();
+        }
+    }, [toggle, image]);
 
     return (
         <>
